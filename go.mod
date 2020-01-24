@@ -1,0 +1,3 @@
+module github.com/heppu/embdr
+
+go 1.14

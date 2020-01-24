@@ -1,0 +1,44 @@
+// Code generated with go generate; DO NOT EDIT.
+
+package {{ .Package }}
+
+import (
+	"bytes"
+	"compress/gzip"
+	"encoding/base64"
+	"errors"
+	"io/ioutil"
+)
+
+var ErrTemplateDoesNotExist = errors.New("template doesn't exists")
+
+var templates = map[string]string{
+{{- range $key, $value := .Templates}}
+	"{{ $key }}": `
+{{$value}}`,
+{{- end}}
+}
+
+// Template returns content of embedded template where name is the the path passed to emdbr.
+func Template(name string) (string, error) {
+	decoded, ok := templates[name]
+	if !ok {
+		return "", ErrTemplateDoesNotExist
+	}
+
+	r, err := gzip.NewReader(base64.NewDecoder(base64.StdEncoding, bytes.NewBufferString(decoded)))
+	if err != nil {
+		return "", err
+	}
+
+	encoded, err := ioutil.ReadAll(r)
+	if err != nil {
+		return "", err
+	}
+
+	if err := r.Close(); err != nil {
+		return "", err
+	}
+
+	return string(encoded), nil
+}
