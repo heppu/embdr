@@ -1,16 +1,18 @@
 NAME 		= embdr
 MAIN		= cmd/${NAME}/main.go
 SOURCES 	= $(wildcard *.go) ${MAIN}
-COVERAGE	= target/cover.txt
+COVERAGE	= target/coverage.txt
 LINT_REPORT	= target/lint.txt
 BINARY		= target/${NAME}
 MODULES		= go.sum
 MOD_FILE	= go.mod
 
+export GOBIN	?= $(shell go env GOPATH)/bin
 TOOLS_DIR		:= target/tools/
 GOLANGCI_LINT	:= ${TOOLS_DIR}github.com/golangci/golangci-lint/cmd/golangci-lint@v1.23.8
 REVIEWDOG		:= ${TOOLS_DIR}github.com/reviewdog/reviewdog/cmd/reviewdog@v0.9.17
 GORELEASER		:= ${TOOLS_DIR}github.com/goreleaser/goreleaser@v0.129.0
+
 
 ${GOLANGCI_LINT} ${REVIEWDOG}:
 	@echo Installing ${@}...
@@ -34,7 +36,7 @@ ${MODULES}: ${SOURCES} ${MOD_FILE}
 test: ${COVERAGE}
 ${COVERAGE}: ${SOURCES}
 	@mkdir -p target
-	go test -race -cover -coverprofile=${@} ./...
+	go test -race -coverprofile=${@} -covermode=atomic ./...
 
 lint: ${LINT_REPORT}
 ${LINT_REPORT}: ${SOURCES} ${GOLANGCI_LINT}
@@ -42,7 +44,7 @@ ${LINT_REPORT}: ${SOURCES} ${GOLANGCI_LINT}
 
 .PHONY: review
 review: ${LINT_REPORT} ${REVIEWDOG}
-	cat ${LINT_REPORT} | ${REVIEWDOG} -f=golangci-lin -reporter=github-check
+	cat ${LINT_REPORT} | ${REVIEWDOG} -f=golangci-lint -reporter=github-check
 
 .PHONY: verify-no-changes
 verify-no-changes:
