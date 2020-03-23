@@ -57,8 +57,7 @@ func Encode(data []byte) ([]byte, error) {
 	if err := enc.Close(); err != nil {
 		return nil, err
 	}
-	Id := "asd"
-	_ = Id
+
 	return buf.Bytes(), nil
 }
 
