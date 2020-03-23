@@ -23,9 +23,10 @@ ${GOLANGCI_LINT} ${REVIEWDOG}:
 
 all: ${MODULES} ${COVERAGE} ${BINARY}
 
-build:${BINARY}
+build: ${BINARY}
 ${BINARY}: ${SOURCES}
 	@mkdir -p target
+	go generate ./...
 	go build -o ${@} ${MAIN}
 
 modules: ${MODULES}
@@ -47,11 +48,12 @@ review: ${LINT_REPORT} ${REVIEWDOG}
 	cat ${LINT_REPORT} | ${REVIEWDOG} -f=golangci-lint -reporter=github-check
 
 .PHONY: verify-no-changes
-verify-no-changes:
+verify-no-changes: ${BINARY}
+	${BINARY} -p embdr -o template.go template.tmpl
 	git diff --name-status --exit-code
 
 .PHONY: release
-release: ${COVERAGE} ${BINARY}
+release: ${GORELEASER}
 
 clean:
 	rm -rf target
