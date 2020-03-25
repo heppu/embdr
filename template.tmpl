@@ -19,8 +19,8 @@ var templates = map[string]string{
 {{- end}}
 }
 
-// Template returns content of embedded template where name is the the path passed to emdbr.
-func Template(name string) (string, error) {
+// LoadTemplate returns content of embedded template where name is the the path passed to emdbr.
+func LoadTemplate(name string) (string, error) {
 	decoded, ok := templates[name]
 	if !ok {
 		return "", ErrTemplateDoesNotExist
