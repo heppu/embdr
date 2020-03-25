@@ -1,4 +1,11 @@
 # Embdr
+[![Go Report Card](https://goreportcard.com/badge/github.com/heppu/embdr)](https://goreportcard.com/report/github.com/heppu/embdr)
+[![Documentation](https://godoc.org/github.com/heppu/embdr?status.svg)](https://pkg.go.dev//github.com/heppu/embdr)
+[![codecov](https://codecov.io/gh/heppu/embdr/branch/master/graph/badge.svg)](https://codecov.io/gh/heppu/embdr)
+[![GitHub issues](https://img.shields.io/github/issues/heppu/embdr.svg)](https://github.com/heppu/embdr/issues)
+[![license](https://img.shields.io/github/license/heppu/embdr.svg?maxAge=2592000)](https://github.com/heppu/embdr/LICENSE)
+[![Release](https://img.shields.io/github/release/heppu/embdr.svg?label=Release)](https://github.com/heppu/embdr/releases)
+
 
 Simplest static asset embedding tool for Go with zero 3rd party dependencies.
 
