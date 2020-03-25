@@ -16,20 +16,20 @@ func TestTemplate(t *testing.T) {
 	expected, err := ioutil.ReadFile(filename)
 	noErrorf(t, err, "failed to read %s", filename)
 
-	got, err := embdr.Template(filename)
+	got, err := embdr.LoadTemplate(filename)
 	noErrorf(t, err, "failed get template for %s", filename)
 
 	isTruef(t, string(expected) == got, "content of file %s doesn't match stored data", filename)
 }
 
 func TestTemplateNotFound(t *testing.T) {
-	_, err := embdr.Template("foo")
+	_, err := embdr.LoadTemplate("foo")
 	isTruef(t, err == embdr.ErrTemplateDoesNotExist, "expected 'embdr.ErrTemplateDoesNotExist' error, got '%s'", err)
 }
 
 func ExampleTemplate() {
 	const name = "template.tmpl"
-	tmpl, err := embdr.Template(name)
+	tmpl, err := embdr.LoadTemplate(name)
 	if err != nil {
 		log.Fatalf("Couldn't get template with name: %s", err)
 	}
