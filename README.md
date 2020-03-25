@@ -17,7 +17,7 @@ embdr -p mypkg -o templates.go index.tmpl`
 ```
 
 Load:
-```
+```go
 tmpl, err := LoadTemplate(name)
 ```
 
