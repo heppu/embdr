@@ -27,7 +27,7 @@ build: ${BINARY}
 ${BINARY}: ${SOURCES}
 	@mkdir -p target
 	go generate ./...
-	go build -o ${@} ${MAIN}
+	CGO_ENABLED=0 go build -o ${@} ${MAIN}
 
 modules: ${MODULES}
 ${MODULES}: ${SOURCES} ${MOD_FILE}
