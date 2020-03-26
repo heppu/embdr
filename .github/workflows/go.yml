@@ -1,5 +1,9 @@
 name: PR
-on: pull_request
+on:
+  pull_request:
+  push:
+    tags:
+      - '*'
 jobs:
   build:
     name: Verify PR
@@ -13,7 +17,7 @@ jobs:
       id: go
 
     - name: Check out code into the Go module directory
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - uses: actions/cache@v1
       with:
@@ -42,3 +46,13 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         file: target/coverage.txt
+
+    - name: release
+      uses: goreleaser/goreleaser-action@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        version: latest
+        args: release --rm-dist --skip-publish
+        key: ${{ secrets.YOUR_PRIVATE_KEY }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
