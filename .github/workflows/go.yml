@@ -21,12 +21,8 @@ jobs:
 
     - uses: actions/cache@v1
       with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-embdr
-    - uses: actions/cache@v1
-      with:
-        path: target
-        key: ${{ runner.os }}-go-embdr-target
+        path: ~/go/
+        key: ${{ runner.os }}-go-
 
     - name: Test
       run: make test
@@ -52,7 +48,7 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       with:
         version: latest
-        args: release --rm-dist --skip-publish
+        args: release --rm-dist
         key: ${{ secrets.YOUR_PRIVATE_KEY }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
