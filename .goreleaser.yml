@@ -4,14 +4,12 @@ project_name: embdr
 
 before:
   hooks:
-    - go mod download
-    - go generate ./...
-
+  - go mod download
+  - go generate ./...
 builds:
-  main: ./cmd/embdr/main.go
+- main: ./cmd/embdr/main.go
   env:
   - CGO_ENABLED=0
-
   goos:
   - darwin
   - linux
