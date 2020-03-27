@@ -48,11 +48,12 @@ func main() {
 
 	flag.StringVar(&pkgName, "p", "", "package name")
 	flag.StringVar(&output, "o", "", "output file (default STDOUT)")
-	flag.Parse()
 
 	flag.Usage = func() {
 		fmt.Print(usage)
 	}
+
+	flag.Parse()
 
 	if pkgName == "" {
 		flag.Usage()
