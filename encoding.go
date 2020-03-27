@@ -1,5 +1,4 @@
-// Package embdr provides functions for encoding and decoding files
-// in gz compressed base64 format and embdrding them in go binaries.
+// Package embdr provides functions for encoding and decoding data in gz compressed base64 format.
 package embdr
 
 import (
