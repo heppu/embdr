@@ -7,7 +7,7 @@
 [![license](https://img.shields.io/github/license/heppu/embdr.svg?maxAge=2592000)](https://github.com/heppu/embdr/LICENSE)
 
 
-Simplest static asset embedding tool for Go with zero 3rd party dependencies.
+Emdeb Go templates with zero 3rd party dependencies.
 
 Just generate and load.
 
@@ -105,3 +105,7 @@ $ go generate ./...
 $ go run main.go templates.go
 Hi there Gopher!
 ```
+
+## Why one more embedding tool?
+
+There are almost as many static asset embedding tools for go as there are http routers. Why I decided to make one more was to have something extremely simple with no additional knobs and pulls. Just give the input, ouput and package name and don't care about anything else. I also didn't want force users to use any external 3rd party dependencies.
