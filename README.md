@@ -27,6 +27,16 @@ go get github.com/heppu/embdr/cmd/embdr
 
 ## Usage
 
+
+```
+embdr -p <package_name> [-o output_file] [file_1 file_2 ...]
+
+Flags:
+
+	-p  package name
+	-o  output file (default STDOUT)
+```
+
 ### Embed single file
 
 ```bash
@@ -41,34 +51,57 @@ find ./templates/ -name '*.tmpl' | ./embdr -p mypkg -o templates.go
 
 ### Using go generate directive
 
+Define template file.
+
+```
+{{- /* user.tmpl */ -}}
+
+Hi there {{.Name}}!
+```
+
+Then create file that has the //go:generate directive.
+
 ```go
-package mypkg
+// main.go
 
-//go:generate embdr -p mypkg -o templates.go user.tmpl user.tmpl
+package main
 
-import "text/template"
+//go:generate embdr -p main -o templates.go user.tmpl
 
-var userTmpl template.Template
+import (
+	"log"
+	"os"
+	"text/template"
+)
 
-func init() {
-	const name = "user.tmpl"
-
-	tmpl, err := LoadTemplate(name)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	userTmpl, err := template.New(name).Parse(tmpl)
-	if err != nil {
-		log.Fatal(err)
-	}
+type User struct {
+	Name string
 }
 
-func RenderUser(user User) error {
-	return t.Execute(w, user)
+func main() {
+	const name = "user.tmpl"
+
+	data, err := LoadTemplate(name)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t, err := template.New(name).Parse(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = t.Execute(os.Stdout, User{Name: "Gopher"})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 ```
 
+Now just generate embedded templates with go generate and you are ready to go!
+
 ```bash
-go generate ./...
+$ go generate ./...
+$ go run main.go templates.go
+Hi there Gopher!
 ```

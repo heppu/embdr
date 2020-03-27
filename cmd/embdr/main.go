@@ -16,15 +16,43 @@ type GenParams struct {
 	Templates map[string]string
 }
 
+const usage = `Embdr is tool for embedding templates in Go source code.
+
+
+Usage:
+
+	embdr -p <package_name> [-o output_file] [file_1 file_2 ...]
+
+Flags:
+
+	-p  package name
+	-o  output file (default STDOUT)
+
+Examples:
+
+	Read index.tmpl file and encode it into templates.go file using package name 'mypkg':
+
+		embdr -p mypkg -o templates.go index.tmpl
+
+
+	Read list of files from STDIN and write encoded data to STDOUT using package name 'mypkg':
+
+		find ./templates/ -name '*.tmpl' | ./embdr -p mypkg
+`
+
 func main() {
 	var (
 		pkgName string
 		output  string
 	)
 
-	flag.StringVar(&output, "o", "", "name of generated output file (default STDOUT)")
-	flag.StringVar(&pkgName, "p", "", "name of generated package")
+	flag.StringVar(&pkgName, "p", "", "package name")
+	flag.StringVar(&output, "o", "", "output file (default STDOUT)")
 	flag.Parse()
+
+	flag.Usage = func() {
+		fmt.Print(usage)
+	}
 
 	if pkgName == "" {
 		flag.Usage()
