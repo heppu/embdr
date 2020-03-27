@@ -2,8 +2,6 @@
 // in gz compressed base64 format and embdrding them in go binaries.
 package embdr
 
-//go:generate go run cmd/embdr/main.go -p embdr -o template.go template.tmpl
-
 import (
 	"bytes"
 	"compress/gzip"

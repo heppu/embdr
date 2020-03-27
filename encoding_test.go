@@ -35,7 +35,7 @@ func TestEncodeNonExistingFile(t *testing.T) {
 }
 
 func TestEncodeNonUTF8File(t *testing.T) {
-	_, err := embdr.EncodeFiles("testdata/invalid")
+	_, err := embdr.EncodeFiles("testdata/invalid/data.bin")
 	isTruef(t, err != nil, "Encoding non utf8 data should have failed")
 }
 
