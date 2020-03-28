@@ -1,6 +1,6 @@
 NAME 		= embdr
 MAIN		= cmd/${NAME}/main.go
-SOURCES 	= $(wildcard *.go) ${MAIN}
+SOURCES 	= $(wildcard *.go) $(wildcard cmd/emdbr/*.go)
 COVERAGE	= target/coverage.txt
 LINT_REPORT	= target/lint.txt
 BINARY		= target/${NAME}
