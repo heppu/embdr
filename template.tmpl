@@ -19,7 +19,7 @@ var files = map[string]string{
 {{- end}}
 }
 
-// Load returns content of embedded template where name is the the path passed to emdbr.
+// Load returns content of embedded file where name is the the path passed to embdr.
 func Load(name string) (string, error) {
 	decoded, ok := files[name]
 	if !ok {
