@@ -12,16 +12,16 @@ import (
 
 var ErrTemplateDoesNotExist = errors.New("template doesn't exists")
 
-var templates = map[string]string{
+var files = map[string]string{
 {{- range $key, $value := .Templates}}
 	"{{ $key }}": `
 {{$value}}`,
 {{- end}}
 }
 
-// LoadTemplate returns content of embedded template where name is the the path passed to emdbr.
-func LoadTemplate(name string) (string, error) {
-	decoded, ok := templates[name]
+// Load returns content of embedded template where name is the the path passed to emdbr.
+func Load(name string) (string, error) {
+	decoded, ok := files[name]
 	if !ok {
 		return "", ErrTemplateDoesNotExist
 	}

@@ -84,7 +84,7 @@ func main() {
 	}
 
 	const name = "template.tmpl"
-	tmpl, err := embdr.LoadTemplate(name)
+	tmpl, err := embdr.Load(name)
 	if err != nil {
 		logAndExitf("Couldn't get template with name: %s", err)
 	}

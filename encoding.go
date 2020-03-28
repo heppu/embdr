@@ -1,6 +1,8 @@
 // Package embdr provides functions for encoding and decoding data in gz compressed base64 format.
 package embdr
 
+//go:generate go run ./cmd/embdr/main.go -p embdr -o template.go template.tmpl
+
 import (
 	"bytes"
 	"compress/gzip"
